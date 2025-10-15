@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getNodeList = getNodeList;
+exports.transformStatementList = transformStatementList;
+var transformStatement_1 = require("./transformStatement");
+function getNodeList(statements) {
+    return Array.isArray(statements) ? statements : [statements];
+}
+function transformStatementList(state, statements) {
+    var result = new Array();
+    var _loop_1 = function (statement) {
+        var _a = state.capture(function () { return (0, transformStatement_1.transformStatement)(state, statement); }), newStatements = _a[0], prereqs = _a[1];
+        result.push.apply(result, prereqs.map(function (prereq) { return (0, transformStatement_1.transformStatement)(state, prereq); }));
+        result.push.apply(result, getNodeList(newStatements));
+    };
+    for (var _i = 0, statements_1 = statements; _i < statements_1.length; _i++) {
+        var statement = statements_1[_i];
+        _loop_1(statement);
+    }
+    return result;
+}
