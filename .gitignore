@@ -1,0 +1,10 @@
+/node_modules
+/out
+/include
+*.tsbuildinfo
+*.rbxlx.lock
+*.rbxl.lock
+
+flamework.build
+
+.DS_Store
